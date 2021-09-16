@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/slate/bootstrap.min.css"
+      integrity="sha384-8iuq0iaMHpnH2vSyvZMSIqQuUnQA7QM+f6srIdlgBrTSEyd//AWNMyEaSF2yPzNQ"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1 class="display-4 text-center my-3">Agregar Producto</h1>
+    <div class="container">
+      <div class="form-group">
+        <label for="product-name" class="form-label mt-4">Producto</label>
+        <input
+          type="text"
+          name="product-name"
+          id="product-name"
+          class="form-control"
+          placeholder="Nombre del Producto"
+        />
+      </div>
+      <div class="form-group">
+        <label for="product-price" class="form-label mt-4">Precio</label>
+        <input
+          type="number"
+          name="product-price"
+          id="product-price"
+          class="form-control"
+          placeholder="Precio"
+        />
+      </div>
+      <div class="form-group">
+        <label for="product-stock" class="form-label mt-4">Existencia</label>
+        <input
+          type="number"
+          name="product-stock"
+          id="product-stock"
+          class="form-control"
+          placeholder="Existencia"
+        />
+      </div>
+      <br />
+      <div class="text-center">
+        <input
+          class="btn btn-success"
+          type="submit"
+          value="Agregar"
+          onclick="saveProduct()"
+        />
+      </div>
+    </div>
+    <script>
+      async function saveProduct() {
+        const name = document.getElementById("product-name");
+        const price = document.getElementById("product-price");
+        const stock = document.getElementById("product-stock");
+        const obj = {
+          name: name.value,
+          price: parseFloat(price.value),
+          stock: parseInt(stock.value),
+        };
+        try {
+          const res = await fetch("/api/products", {
+            method: "POST",
+            body: JSON.stringify(obj),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          window.location.href = "/";    
+        } catch (error) {
+            console.log(error);
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -23,9 +23,8 @@ class Product(BaseModel):
     price: float
     stock: int
 
-
 @app.get("/api")
-def api_root():
+def root_api():
     return {"welcome": "Welcome to my FastAPI"}
 
 @app.get("/api/products")
@@ -53,7 +52,7 @@ def update_product(product_id: str, update_product: Product):
     for index, product in enumerate(products):
         if product["id"] == product_id:
             products[index]["name"] = update_product.dict()["name"]
-            products[index]["prize"] = update_product.dict()["prize"]
+            products[index]["price"] = update_product.dict()["price"]
             products[index]["stock"] = update_product.dict()["stock"]
             return {"message": "Product has been updated successfully"}
     raise HTTPException(status_code=404, detail="Product not found")
@@ -68,9 +67,18 @@ def delete_product(product_id: str):
     raise HTTPException(status_code=404, detail="Product not found")
 
 @app.get("/")
-def index(req: Request):
-    return templates.TemplateResponse("index.html", {"request": req})
-
-@app.get("/products")
 def list_products(req: Request):
     return templates.TemplateResponse("products-list.html", {"request": req, "products": products})
+
+
+@app.get("/products/{product_id}")
+def get_product(req: Request, product_id: str):
+    for product in products:
+        if product["id"] == product_id:
+            return templates.TemplateResponse("update-product.html", {"request": req, "product": product})
+    raise HTTPException(status_code=404, detail="Product not found")
+
+
+@app.get("/new-product")
+def new_product(req: Request):
+    return templates.TemplateResponse("new-product.html", {"request": req})

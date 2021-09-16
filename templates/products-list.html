@@ -10,12 +10,22 @@
       integrity="sha384-8iuq0iaMHpnH2vSyvZMSIqQuUnQA7QM+f6srIdlgBrTSEyd//AWNMyEaSF2yPzNQ"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Productos</title>
   </head>
   <body>
-    <h1 class="display-4 text-center my-3">Productos Registrados</h1>
+    <h1 class="display-4 text-center my-3">Productos</h1>
     <br />
-    <div class="container">
+    <div class="container text-right">
+      <a href="/new-product"><i class="fas fa-2x fa-plus-circle"></i></a>
+      <br />
+      <br />
       <table class="table table-hover">
         <thead>
           <tr class="text-center">
@@ -28,10 +38,18 @@
         <tbody>
           {% for product in products %}
           <tr>
-            <th scope="row">{{ product["name"] }}</th>
-            <td class="text-right">{{ product["price"] }}</td>
-            <td class="text-right">{{ product["stock"] }}</td>
-            <td class="text-center">              
+            <th scope="row" class="text-center">{{ product["name"] }}</th>
+            <td class="text-center">$ {{ product["price"] }}</td>
+            <td class="text-center">{{ product["stock"] }}</td>
+            <td class="text-center">
+              <a href="products/{{product['id']}}">
+                <button
+                  class="btn btn-warning btn-sm"
+                  onclick="updateProduct(`{{product['id']}}`)"
+                >
+                  Actualizar
+                </button>
+              </a>
               <button
                 class="btn btn-danger btn-sm"
                 onclick="deleteProduct(`{{product['id']}}`)"
@@ -50,7 +68,7 @@
           const resp = await fetch(`/api/products/${id}`, {
             method: "DELETE",
           });
-          window.location.href = "/products";
+          window.location.href = "/";
         } catch (e) {
           console.log(e);
         }
