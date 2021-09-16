@@ -1,12 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Productos</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/slate/bootstrap.min.css"
+      integrity="sha384-8iuq0iaMHpnH2vSyvZMSIqQuUnQA7QM+f6srIdlgBrTSEyd//AWNMyEaSF2yPzNQ"
+      crossorigin="anonymous"
+    />
+    <title>Productos</title>
+  </head>
+  <body>
+    <h1 class="display-4 text-center my-3">Productos Registrados</h1>
+    <br />
+    <div class="container">
+      <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">Producto</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <th scope="row">{{ product["name"] }}</th>
+            <td class="text-right">{{ product["price"] }}</td>
+            <td class="text-right">{{ product["stock"] }}</td>
+            <td class="text-center">              
+              <button
+                class="btn btn-danger btn-sm"
+                onclick="deleteProduct(`{{product['id']}}`)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <script>
+      async function deleteProduct(id) {
+        try {
+          const resp = await fetch(`/api/products/${id}`, {
+            method: "DELETE",
+          });
+          window.location.href = "/products";
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    </script>
+  </body>
 </html>

@@ -6,10 +6,13 @@ from uuid import uuid4 as uuid
 from starlette.requests import Request
 from starlette.responses import Response
 import uvicorn
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
 products = []
+
+templates = Jinja2Templates(directory="templates")
 
 # Products Model
 
@@ -63,3 +66,11 @@ def delete_product(product_id: str):
             products.pop(index)
             return {"message": "Product has been deleted successfully"}
     raise HTTPException(status_code=404, detail="Product not found")
+
+@app.get("/")
+def index(req: Request):
+    return templates.TemplateResponse("index.html", {"request": req})
+
+@app.get("/products")
+def list_products(req: Request):
+    return templates.TemplateResponse("products-list.html", {"request": req, "products": products})
