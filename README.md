@@ -8,6 +8,9 @@ Para las vistas se utilizó el motor de plantillas Jinja2 para tener una interfa
 ## Clonar Repositorio
 `$ git clone https://github.com/MissaelLopez/fastapi-products.git`
 
+## Acceder a la carpeta
+`$ cd fastapi-products`
+
 ## Crear Entorno Virtual con virtualenv
 `$ virtualenv env`
 
