@@ -8,8 +8,11 @@ Para las vistas se utilizó el motor de plantillas Jinja2 para tener una interfa
 ## Clonar Repositorio
 `$ git clone https://github.com/MissaelLopez/fastapi-products.git`
 
-## Activar Entorno Virtual
-`$ souce env/bin/activate`
+## Crear Entorno Virtual con virtualenv
+`$ virtualenv env`
+
+## Instalar dependencias
+`$ pip install -r requirements.txt`
 
 ## Ejecutar Aplicación
 `$ uvicorn app:app`
