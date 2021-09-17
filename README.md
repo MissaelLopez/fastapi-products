@@ -14,6 +14,9 @@ Para las vistas se utilizó el motor de plantillas Jinja2 para tener una interfa
 ## Crear Entorno Virtual con virtualenv
 `$ virtualenv env`
 
+## Activar Entorno Virtual
+`$ source env/bin/activate`
+
 ## Instalar dependencias
 `$ pip install -r requirements.txt`
 
